@@ -14,22 +14,21 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    public User saveUser(User user) {
+    public void saveUser(User user) {
         user.setStatus(Status.ONLINE);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
-    public User disconnect(User user){
+    public void disconnect(User user) {
         var storedUser = userRepository.findById(user.getNickName()).orElse(null);
-        if(storedUser != null){
+        if (storedUser != null) {
             storedUser.setStatus(Status.OFFLINE);
-            return userRepository.save(storedUser);
+            userRepository.save(storedUser);
         }
-        return null;
     }
+
     public List<User> findConnectedUsers() {
+
         return userRepository.findAllByStatus(Status.ONLINE);
     }
-
-
 }

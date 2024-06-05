@@ -20,17 +20,25 @@ public class UserController {
         this.userService = userService;
     }
     @MessageMapping("/user.addUser")
-    @SendTo("/topic/topic")
-    public User saveUser(@Payload User user) {
-        return userService.saveUser(user);
+    @SendTo("/user/public")
+    public User addUser(
+            @Payload User user
+    ) {
+        userService.saveUser(user);
+        return user;
     }
+
     @MessageMapping("/user.disconnectUser")
-    @SendTo("/topic/topic")
-    public User disconnect(@Payload User user){
-        return userService.disconnect(user);
+    @SendTo("/user/public")
+    public User disconnectUser(
+            @Payload User user
+    ) {
+        userService.disconnect(user);
+        return user;
     }
-    @GetMapping("/user")
-    public ResponseEntity<List<User>> findConnectedUsers(){
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> findConnectedUsers() {
         return ResponseEntity.ok(userService.findConnectedUsers());
     }
 

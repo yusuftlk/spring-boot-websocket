@@ -31,6 +31,7 @@ public class ChatRoomService{
                     return  Optional.empty();
                 });
     }
+
     private String createChatId(String senderId, String recipientId) {
         var chatId = String.format("%s_%s", senderId, recipientId);
 

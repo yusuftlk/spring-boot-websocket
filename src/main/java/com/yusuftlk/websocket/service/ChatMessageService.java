@@ -16,21 +16,18 @@ public class ChatMessageService {
         this.chatMessageRepository = chatMessageRepository;
         this.chatRoomService = chatRoomService;
     }
-    public ChatMessage save(ChatMessage chatMessage){
-        var chatId = chatRoomService.getChatRoomId(
-                chatMessage.getSenderId(),
-                chatMessage.getRecipientId(), true).orElse(null);
-
+    public ChatMessage save(ChatMessage chatMessage) {
+        var chatId = chatRoomService
+                .getChatRoomId(chatMessage.getSenderId(), chatMessage.getRecipientId(), true)
+                .orElseThrow(); // You can create your own dedicated exception
         chatMessage.setChatId(chatId);
-        return chatMessageRepository.save(chatMessage);
+        chatMessageRepository.save(chatMessage);
+        return chatMessage;
     }
 
     public List<ChatMessage> findChatMessages(String senderId, String recipientId) {
         var chatId = chatRoomService.getChatRoomId(senderId, recipientId, false);
         return chatId.map(chatMessageRepository::findByChatId).orElse(new ArrayList<>());
     }
-
-
-
 
 }
