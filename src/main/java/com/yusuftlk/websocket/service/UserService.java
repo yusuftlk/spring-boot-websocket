@@ -18,7 +18,6 @@ public class UserService {
         user.setStatus(Status.ONLINE);
         userRepository.save(user);
     }
-
     public void disconnect(User user) {
         var storedUser = userRepository.findById(user.getNickName()).orElse(null);
         if (storedUser != null) {
@@ -26,7 +25,6 @@ public class UserService {
             userRepository.save(storedUser);
         }
     }
-
     public List<User> findConnectedUsers() {
 
         return userRepository.findAllByStatus(Status.ONLINE);

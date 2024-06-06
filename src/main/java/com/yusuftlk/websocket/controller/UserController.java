@@ -27,7 +27,6 @@ public class UserController {
         userService.saveUser(user);
         return user;
     }
-
     @MessageMapping("/user.disconnectUser")
     @SendTo("/user/public")
     public User disconnectUser(
@@ -36,7 +35,6 @@ public class UserController {
         userService.disconnect(user);
         return user;
     }
-
     @GetMapping("/users")
     public ResponseEntity<List<User>> findConnectedUsers() {
         return ResponseEntity.ok(userService.findConnectedUsers());
